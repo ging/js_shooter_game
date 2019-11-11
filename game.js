@@ -13,10 +13,17 @@ function getRandomNumber(range) {
     return Math.floor(Math.random() * range);
 }
 
+function collision(div1, div2) {
+  const a = div1.getBoundingClientRect();
+  const b = div2.getBoundingClientRect();
+  return ! (a.bottom < b.top || a.top > b.bottom || a.right < b.left || a.left > b.right);
+}
+
 class Player {
   constructor(game) {
     this.game = game;
     this.speed = 20;
+    this.dead = false;
     this.height = PLAYERHEIGHT*this.game.height/100;
     this.width = PLAYERWIDTH*this.game.width/100;
     this.myImage = new Image(this.width, this.height);
@@ -27,9 +34,16 @@ class Player {
     this.myImage.style.top = this.y + "px";
     this.myImage.style.left = this.x + "px";
     document.body.appendChild(this.myImage);
-
-    this.update = this.update.bind(this);
-    this.render = this.render.bind(this);
+  }
+  die(){
+    if(!this.dead){
+      this.myImage.src = 'assets/bueno_muerto.png';
+      this.dead = true;
+      setTimeout(()=>{
+        this.game.endGame();
+        document.body.removeChild(this.myImage);
+      }, 2000);
+    }
   }
   update(){
     switch(this.game.keyPressed){
@@ -56,12 +70,13 @@ class Enemy {
   constructor(game) {
     this.game = game;
     this.speed = 5;
+    this.dead = false;
     this.height = ENEMYHEIGHT*this.game.height/100;
     this.width = ENEMYWIDTH*this.game.width/100;
     this.direction = 'R';
     this.horizontalMov = getRandomNumber(this.game.width/2);
     this.myImage = new Image(this.width, this.height);
-    this.myImage.src = 'assets/malo1.png';
+    this.myImage.src = 'assets/malo.png';
     this.myImage.style.position = "absolute";
     this.x = getRandomNumber(this.game.width - this.width);
     this.y = 0;
@@ -70,38 +85,48 @@ class Enemy {
     document.body.appendChild(this.myImage);
 
     setTimeout(()=>this.shoot(), 1000 + getRandomNumber(2500));
-
-    this.update = this.update.bind(this);
-    this.render = this.render.bind(this);
-    this.shoot = this.shoot.bind(this);
   }
   shoot(){
-    this.game.shoot(this);
-    setTimeout(()=>this.shoot(), 1000 + getRandomNumber(2500));
+    if(!this.dead){
+      this.game.shoot(this);
+      setTimeout(()=>this.shoot(), 1000 + getRandomNumber(2500));
+    }
+  }
+  die(){
+    if(!this.dead){
+      this.myImage.src = 'assets/malo_muerto.png';
+      this.dead = true;
+      setTimeout(()=>{
+        this.game.removeEnemy();
+        document.body.removeChild(this.myImage);
+      }, 2000);
+    }
   }
   update(){
-    this.y = this.y + this.speed;
-    if(this.y>this.game.height){
-      this.game.removeEnemy();
-      document.body.removeChild(this.myImage);
-    }
-    if(this.direction==="R"){ //Right movement
-      if(this.x < this.game.width - this.width - this.speed){
-        this.x = this.x + this.speed;
-      } else {
-        this.horizontalMov = 0;
+    if(!this.dead){
+      this.y = this.y + this.speed;
+      if(this.y>this.game.height){
+        this.game.removeEnemy();
+        document.body.removeChild(this.myImage);
       }
-    } else {
-      if(this.x>this.speed){
-        this.x = this.x - this.speed;
+      if(this.direction==="R"){ //Right movement
+        if(this.x < this.game.width - this.width - this.speed){
+          this.x = this.x + this.speed;
+        } else {
+          this.horizontalMov = 0;
+        }
       } else {
-        this.horizontalMov = 0;
+        if(this.x>this.speed){
+          this.x = this.x - this.speed;
+        } else {
+          this.horizontalMov = 0;
+        }
       }
-    }
-    this.horizontalMov = this.horizontalMov - this.speed; //update the remaining movement
-    if(this.horizontalMov < this.speed){
-      this.horizontalMov = getRandomNumber(this.game.width/2);
-      this.direction = this.direction === "R" ? "L":"R"; //change direction
+      this.horizontalMov = this.horizontalMov - this.speed; //update the remaining movement
+      if(this.horizontalMov < this.speed){
+        this.horizontalMov = getRandomNumber(this.game.width/2);
+        this.direction = this.direction === "R" ? "L":"R"; //change direction
+      }
     }
   }
   render(){
@@ -115,9 +140,9 @@ class Shot {
     this.game = game;
     this.speed = 20;
     this.type = character instanceof Player ? "PLAYER":"ENEMY";
-    let height = SHOTHEIGHT*this.game.height/100;
-    let width = SHOTWIDTH*this.game.width/100;
-    this.myImage = new Image(width, height);
+    this.height = SHOTHEIGHT*this.game.height/100;
+    this.width = SHOTWIDTH*this.game.width/100;
+    this.myImage = new Image(this.width, this.height);
     this.myImage.src = this.type==="PLAYER" ? 'assets/shot1.png':'assets/shot2.png';
     this.myImage.style.position = "absolute";
     this.x = character.x;
@@ -125,9 +150,6 @@ class Shot {
     this.myImage.style.top = this.y + "px";
     this.myImage.style.left = this.x + "px";
     document.body.appendChild(this.myImage);
-
-    this.update = this.update.bind(this);
-    this.render = this.render.bind(this);
   }
   update(){
     if(this.type === "PLAYER"){
@@ -159,11 +181,6 @@ class Game {
     this.playerShots = [];
     this.enemy = undefined;
     this.enemyShots = [];
-
-    this.update = this.update.bind(this);
-    this.start = this.start.bind(this);
-    this.checkKey = this.checkKey.bind(this);
-    this.render = this.render.bind(this);
   }
   start(){
     if(!this.started){
@@ -210,6 +227,37 @@ class Game {
         }
     }
   }
+  checkCollisions(){
+    //player can collide with enemy or shots
+    let impact = false;
+    for (let i = 0; i < this.enemyShots.length; i++) {
+      impact = impact || this.hasCollision(this.player, this.enemyShots[i]);
+    }
+    if(impact || this.hasCollision(this.player, this.enemy)){
+      this.player.die();
+    }
+    let killed = false;
+    for (let i = 0; i < this.playerShots.length; i++) {
+      killed = killed || this.hasCollision(this.enemy, this.playerShots[i]);
+    }
+    if(killed){
+      this.enemy.die();
+    }
+  }
+  hasCollision(item1, item2){
+    if(item2===undefined){
+      return false; //when enemy is undefined, there is no collision
+    }
+    let b1 = item1.y + item1.height;
+    let r1 = item1.x + item1.width;
+    let b2 = item2.y + item2.height;
+    let r2 = item2.x + item2.width;
+    if (b1 < item2.y || item1.y > b2 || r1 < item2.x || item1.x > r2) return false;
+    return true;
+  }
+  endGame(){
+    console.log("FIN");
+  }
   update(){
     this.i = this.i + 1;
     this.player.update();
@@ -217,15 +265,13 @@ class Game {
       this.enemy = new Enemy(this);
     }
     this.enemy.update();
-
-    //requestAnimationFrame(this.update());
-
     this.playerShots.forEach((shot)=>{
       shot.update();
     });
     this.enemyShots.forEach((shot)=>{
       shot.update();
     });
+    this.checkCollisions();
     this.render();
   }
   render(){
