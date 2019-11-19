@@ -83,7 +83,7 @@ class Enemy extends Character{
     setTimeout(()=>this.shoot(), 1000 + getRandomNumber(2500));
   }
   shoot(){
-    if(!this.dead){
+    if(!this.dead && !this.game.ended){
       this.game.shoot(this);
       setTimeout(()=>this.shoot(), 1000 + getRandomNumber(2500));
     }
@@ -99,7 +99,7 @@ class Enemy extends Character{
     }
   }
   update(){
-    if(!this.dead){
+    if(!this.dead && !this.game.ended){
       this.y = this.y + this.speed;
       if(this.y>this.game.height){
         this.game.removeEnemy();
