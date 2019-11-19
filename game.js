@@ -1,13 +1,16 @@
-const KEYLEFT = "LEFT";
-const KEYRIGHT = "RIGHT";
-const KEYSHOOT = "SHOOT";
+const KEY_LEFT = "LEFT";
+const KEY_RIGHT = "RIGHT";
+const KEY_SHOOT = "SHOOT";
 
-const PLAYERWIDTH = 10; //percentage of screen width
-const PLAYERHEIGHT = 5; //percentage of screen height
-const SHOTWIDTH = 1;
-const SHOTHEIGHT = 1;
-const ENEMYWIDTH = 10;
-const ENEMYHEIGHT = 5;
+const PLAYER_WIDTH = 10; //percentage of screen width
+const PLAYER_HEIGHT = 5; //percentage of screen height
+const PLAYER_SPEED = 20;
+const SHOT_WIDTH = 1;
+const SHOT_HEIGHT = 1;
+const ENEMY_WIDTH = 10;
+const ENEMY_HEIGHT = 5;
+const ENEMY_SPEED = 5;
+
 
 function getRandomNumber(range) {
     return Math.floor(Math.random() * range);
@@ -19,21 +22,26 @@ function collision(div1, div2) {
   return ! (a.bottom < b.top || a.top > b.bottom || a.right < b.left || a.left > b.right);
 }
 
-class Player {
-  constructor(game) {
-    this.game = game;
-    this.speed = 20;
+class Character {
+  constructor(game, width, height, x, y, speed, myImage) {
     this.dead = false;
-    this.height = PLAYERHEIGHT*this.game.height/100;
-    this.width = PLAYERWIDTH*this.game.width/100;
-    this.myImage = new Image(this.width, this.height);
-    this.myImage.src = 'assets/bueno.png';
+    this.game = game;
+    this.width = width;
+    this.height = height;
+    this.x = x;
+    this.y = y;
+    this.speed = speed;
+    this.myImage = myImage;
     this.myImage.style.position = "absolute";
-    this.x = this.game.width/2 - this.width;
-    this.y = this.game.height - this.height;
     this.myImage.style.top = this.y + "px";
     this.myImage.style.left = this.x + "px";
     document.body.appendChild(this.myImage);
+  }
+}
+
+class Player extends Character{
+  constructor(game, width, height, x, y, speed, myImage) {
+    super(game, width, height, x, y, speed, myImage);
   }
   die(){
     if(!this.dead){
@@ -46,18 +54,20 @@ class Player {
     }
   }
   update(){
-    switch(this.game.keyPressed){
-      case KEYLEFT:
-        if(this.x>this.speed)
-          this.x = this.x - this.speed;
-      break;
-      case KEYRIGHT:
-        if(this.x < this.game.width - this.width - this.speed)
-          this.x = this.x + this.speed;
-      break;
-      case KEYSHOOT:
-          this.game.shoot(this);
-      break;
+    if(!this.dead){
+      switch(this.game.keyPressed){
+        case KEY_LEFT:
+          if(this.x>this.speed)
+            this.x = this.x - this.speed;
+        break;
+        case KEY_RIGHT:
+          if(this.x < this.game.width - this.width - this.speed)
+            this.x = this.x + this.speed;
+        break;
+        case KEY_SHOOT:
+            this.game.shoot(this);
+        break;
+      }
     }
   }
   render(){
@@ -66,24 +76,10 @@ class Player {
   }
 }
 
-class Enemy {
-  constructor(game) {
-    this.game = game;
-    this.speed = 5;
-    this.dead = false;
-    this.height = ENEMYHEIGHT*this.game.height/100;
-    this.width = ENEMYWIDTH*this.game.width/100;
+class Enemy extends Character{
+  constructor(game, width, height, x, y, speed, myImage) {
+    super(game, width, height, x, y, speed, myImage);
     this.direction = 'R';
-    this.horizontalMov = getRandomNumber(this.game.width/2);
-    this.myImage = new Image(this.width, this.height);
-    this.myImage.src = 'assets/malo.png';
-    this.myImage.style.position = "absolute";
-    this.x = getRandomNumber(this.game.width - this.width);
-    this.y = 0;
-    this.myImage.style.top = this.y + "px";
-    this.myImage.style.left = this.x + "px";
-    document.body.appendChild(this.myImage);
-
     setTimeout(()=>this.shoot(), 1000 + getRandomNumber(2500));
   }
   shoot(){
@@ -140,8 +136,8 @@ class Shot {
     this.game = game;
     this.speed = 20;
     this.type = character instanceof Player ? "PLAYER":"ENEMY";
-    this.height = SHOTHEIGHT*this.game.height/100;
-    this.width = SHOTWIDTH*this.game.width/100;
+    this.height = SHOT_HEIGHT*this.game.height/100;
+    this.width = SHOT_WIDTH*this.game.width/100;
     this.myImage = new Image(this.width, this.height);
     this.myImage.src = this.type==="PLAYER" ? 'assets/shot1.png':'assets/shot2.png';
     this.myImage.style.position = "absolute";
@@ -168,12 +164,11 @@ class Shot {
   }
 }
 
-
-
 class Game {
   constructor(){
     this.i = 0;
     this.started = false;
+    this.ended = false;
     this.keyPressed = undefined;
     this.width = 0;
     this.height = 0;
@@ -191,9 +186,15 @@ class Game {
 
       this.width = window.innerWidth;
       this.height = window.innerHeight;
-      this.player = new Player(this);
+
+      let height = PLAYER_HEIGHT*this.height/100;
+      let width = PLAYER_WIDTH*this.width/100;
+      let x = this.width/2 - width;
+      let y = this.height - height;
+      let myImage = new Image(width, height);
+      myImage.src = 'assets/bueno.png';
+      this.player = new Player(this, width, height, x, y, PLAYER_SPEED, myImage);
       setInterval(()=>this.update(), 50);
-      //this.update();
     }
   }
   shoot(character){
@@ -216,13 +217,13 @@ class Game {
     } else {
         switch(event.keyCode){
   				case 37: //left arrow
-  					this.keyPressed = KEYLEFT;
+  					this.keyPressed = KEY_LEFT;
   				break;
   				case 32: //spacebar
-  					this.keyPressed = KEYSHOOT;
+  					this.keyPressed = KEY_SHOOT;
   				break;
   				case 39: //right arrow
-  					this.keyPressed = KEYRIGHT;
+  					this.keyPressed = KEY_RIGHT;
   				break;
         }
     }
@@ -257,22 +258,36 @@ class Game {
   }
   endGame(){
     console.log("FIN");
+    this.ended = true;
+    this.myImage = new Image(this.width/2, this.height/2);
+    this.myImage.src = 'assets/game_over.jpg';
+    this.myImage.style.position = "absolute";
+    this.myImage.style.top = this.width/4 + "px";
+    this.myImage.style.left = this.height/4 + "px";
+    document.body.appendChild(this.myImage);
   }
   update(){
-    this.i = this.i + 1;
-    this.player.update();
-    if(this.enemy===undefined){
-      this.enemy = new Enemy(this);
+    if(!this.ended) {
+      this.player.update();
+      if(this.enemy===undefined){
+        let height = ENEMY_HEIGHT*this.height/100;
+        let width = ENEMY_WIDTH*this.width/100;
+        let x = getRandomNumber(this.width - width);
+        let y = 0;
+        let myImage = new Image(width, height);
+        myImage.src = 'assets/malo.png';
+        this.enemy = new Enemy(this, width, height, x, y, ENEMY_SPEED, myImage);
+      }
+      this.enemy.update();
+      this.playerShots.forEach((shot)=>{
+        shot.update();
+      });
+      this.enemyShots.forEach((shot)=>{
+        shot.update();
+      });
+      this.checkCollisions();
+      this.render();
     }
-    this.enemy.update();
-    this.playerShots.forEach((shot)=>{
-      shot.update();
-    });
-    this.enemyShots.forEach((shot)=>{
-      shot.update();
-    });
-    this.checkCollisions();
-    this.render();
   }
   render(){
     this.player.render();
