@@ -166,7 +166,6 @@ class Shot {
 
 class Game {
   constructor(){
-    this.i = 0;
     this.started = false;
     this.ended = false;
     this.keyPressed = undefined;
