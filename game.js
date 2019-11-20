@@ -11,6 +11,8 @@ const ENEMY_WIDTH = 10;
 const ENEMY_HEIGHT = 5;
 const ENEMY_SPEED = 5;
 
+const MIN_TOUCHMOVE = 30;
+
 
 function getRandomNumber(range) {
     return Math.floor(Math.random() * range);
@@ -175,12 +177,16 @@ class Game {
     this.playerShots = [];
     this.enemy = undefined;
     this.enemyShots = [];
+    this.xDown = null; //for touch events
   }
   start(){
     if(!this.started){
       //requestAnimationFrame(this.update());
       window.addEventListener('keydown', (e)=>this.checkKey(e,true));
       window.addEventListener('keyup', (e)=>this.checkKey(e,false));
+      window.addEventListener('touchstart', (e)=>this.handleTouchStart(e,true));
+      window.addEventListener('touchmove', (e)=>this.handleTouchMove(e,false));
+
       this.started = true;
 
       this.width = window.innerWidth;
@@ -199,6 +205,7 @@ class Game {
   shoot(character){
     let arrayShots = character instanceof Player ? this.playerShots:this.enemyShots;
     arrayShots.push(new Shot(this, character));
+    this.keyPressed = undefined;
   }
   removeShot(shot){
     let shotsArray = shot.type==="PLAYER" ? this.playerShots:this.enemyShots;
@@ -226,6 +233,34 @@ class Game {
   				break;
         }
     }
+  }
+  getTouches(evt) {
+    return evt.touches || evt.originalEvent.touches;
+  }
+  handleTouchStart(evt) {
+    const firstTouch = this.getTouches(evt)[0];
+    this.xDown = firstTouch.clientX;
+    this.keyPressed = KEY_SHOOT;
+    console.log("touchstart")
+  }
+  handleTouchMove(evt) {
+    if ( ! this.xDown) {
+        return;
+    }
+    let xUp = evt.touches[0].clientX;
+    let xDiff = this.xDown - xUp;
+    console.log(xDiff);
+    if ( xDiff > MIN_TOUCHMOVE ) {  /* left swipe */
+      console.log("LEFT")
+      this.keyPressed = KEY_LEFT;
+    } else if(xDiff < - MIN_TOUCHMOVE) {  /* right swipe */
+      console.log("RIGHT")
+      this.keyPressed = KEY_RIGHT;
+    } else {
+      console.log("SHOOT")
+      this.keyPressed = KEY_SHOOT;
+    }
+    this.xDown = null; /* reset values */
   }
   checkCollisions(){
     //player can collide with enemy or shots
@@ -256,7 +291,6 @@ class Game {
     return true;
   }
   endGame(){
-    console.log("FIN");
     this.ended = true;
     this.myImage = new Image(this.width/2, this.height/2);
     this.myImage.src = 'assets/game_over.jpg';
@@ -290,7 +324,9 @@ class Game {
   }
   render(){
     this.player.render();
-    this.enemy.render();
+    if(this.enemy!==undefined){
+      this.enemy.render();
+    }
     this.playerShots.forEach((shot)=>{
       shot.render();
     });
