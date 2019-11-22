@@ -86,17 +86,13 @@ class Enemy extends Character {
     constructor (game, width, height, x, y, speed, myImage) {
         super(game, width, height, x, y, speed, myImage);
         this.direction = "R";
-        setTimeout(() => this.shoot(),
-            1000 + getRandomNumber(2500)
-        );
+        setTimeout(() => this.shoot(), 1000 + getRandomNumber(2500));
     }
 
     shoot () {
         if (!this.dead && !this.game.ended) {
             this.game.shoot(this);
-            setTimeout(() => this.shoot(),
-                1000 + getRandomNumber(2500)
-            );
+            setTimeout(() => this.shoot(), 1000 + getRandomNumber(2500));
         }
     }
 
@@ -104,13 +100,10 @@ class Enemy extends Character {
         if (!this.dead) {
             this.myImage.src = "assets/malo_muerto.png";
             this.dead = true;
-            setTimeout(
-                () => {
+            setTimeout(() => {
                     this.game.removeEnemy();
                     document.body.removeChild(this.myImage);
-                },
-                2000
-            );
+                }, 2000);
         }
     }
 
@@ -151,7 +144,7 @@ class Shot {
         this.game = game;
         this.speed = 20;
         this.type = character instanceof Player ? "PLAYER" : "ENEMY";
-        this.height = SHOT_HEIGHT * this.game.height / 100;
+        this.height = SHOT_HEIGHT * this.game.width / 100;
         this.width = SHOT_WIDTH * this.game.width / 100;
         this.myImage = new Image(this.width, this.height);
         this.myImage.src = this.type === "PLAYER" ? "assets/shot1.png" : "assets/shot2.png";
@@ -206,7 +199,7 @@ class Game {
             this.width = window.innerWidth;
             this.height = window.innerHeight;
 
-            const height = PLAYER_HEIGHT * this.height / 100,
+            const height = PLAYER_HEIGHT * this.width / 100,
                 width = PLAYER_WIDTH * this.width / 100,
                 x = this.width / 2 - width,
                 y = this.height - height,
@@ -317,8 +310,8 @@ class Game {
         this.myImage = new Image(this.width / 2, this.height / 2);
         this.myImage.src = "assets/game_over.jpg";
         this.myImage.style.position = "absolute";
-        this.myImage.style.top = `${this.width / 4}px`;
-        this.myImage.style.left = `${this.height / 4}px`;
+        this.myImage.style.top = `${this.height / 4}px`;
+        this.myImage.style.left = `${this.width / 4}px`;
         document.body.appendChild(this.myImage);
     }
 
@@ -326,7 +319,7 @@ class Game {
         if (!this.ended) {
             this.player.update();
             if (this.enemy === undefined) {
-                const height = ENEMY_HEIGHT * this.height / 100,
+                const height = ENEMY_HEIGHT * this.width / 100,
                     width = ENEMY_WIDTH * this.width / 100,
                     x = getRandomNumber(this.width - width),
                     y = 0,
