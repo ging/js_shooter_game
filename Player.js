@@ -33,10 +33,4 @@ class Player extends Character {
             }
         }
     }
-
-    render () {
-        // this.myImage.style.top = this.y + "px";
-        this.myImage.style.left = `${this.x}px`;
-    }
-
 }

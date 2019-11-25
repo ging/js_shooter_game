@@ -13,4 +13,8 @@ class Character {
         this.myImage.style.left = `${this.x}px`;
         document.body.appendChild(this.myImage);
     }
+    render () {
+        this.myImage.style.top = `${this.y}px`;
+        this.myImage.style.left = `${this.x}px`;
+    }
 }
