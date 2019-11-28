@@ -14,29 +14,23 @@ class Game {
 
     start () {
         if (!this.started) {
-            // requestAnimationFrame(this.update());
+            // RequestAnimationFrame(this.update());
             window.addEventListener("keydown", (e) => this.checkKey(e, true));
             window.addEventListener("keyup", (e) => this.checkKey(e, false));
             window.addEventListener("touchstart", (e) => this.handleTouchStart(e, true));
             window.addEventListener("touchmove", (e) => this.handleTouchMove(e, false));
             this.started = true;
             this.width = window.innerWidth;
-            this.height = window.innerHeight;
+            this.height = window.innerHeight; 
 
-            const height = PLAYER_HEIGHT * this.width / 100,
-                width = PLAYER_WIDTH * this.width / 100,
-                x = this.width / 2 - width,
-                y = this.height - height,
-                myImage = new Image(width, height);
-
-            myImage.src = "assets/bueno.png";
-            this.player = new Player(this, width, height, x, y, PLAYER_SPEED, myImage);
+            this.player = new Player(this);
             setInterval(() => this.update(), 50);
         }
     }
 
     shoot (character) {
         const arrayShots = character instanceof Player ? this.playerShots : this.enemyShots;
+
         arrayShots.push(new Shot(this, character));
         this.keyPressed = undefined;
     }
@@ -44,10 +38,12 @@ class Game {
     removeShot (shot) {
         const shotsArray = shot.type === "PLAYER" ? this.playerShots : this.enemyShots,
             index = shotsArray.indexOf(shot);
+
         if (index > -1) {
             shotsArray.splice(index, 1);
         }
     }
+
     removeEnemy () {
         this.enemy = undefined;
     }
@@ -57,15 +53,15 @@ class Game {
             this.keyPressed = undefined;
         } else {
             switch (event.keyCode) {
-              case 37: // Left arrow
+            case 37: // Left arrow
                 this.keyPressed = KEY_LEFT;
-              break;
-              case 32: // Spacebar
+                break;
+            case 32: // Spacebar
                 this.keyPressed = KEY_SHOOT;
-              break;
-              case 39: // Right arrow
+                break;
+            case 39: // Right arrow
                 this.keyPressed = KEY_RIGHT;
-              break;
+                break;
             }
         }
     }
@@ -76,6 +72,7 @@ class Game {
 
     handleTouchStart (evt) {
         const firstTouch = this.getTouches(evt)[0];
+
         this.xDown = firstTouch.clientX;
         this.keyPressed = KEY_SHOOT;
     }
@@ -86,6 +83,7 @@ class Game {
         }
         const xUp = evt.touches[0].clientX,
             xDiff = this.xDown - xUp;
+
         if (xDiff > MIN_TOUCHMOVE) { /* Left swipe */
             this.keyPressed = KEY_LEFT;
         } else if (xDiff < -MIN_TOUCHMOVE) { /* Right swipe */
@@ -99,6 +97,7 @@ class Game {
     checkCollisions () {
         // Player can collide with enemy or shots
         let impact = false;
+
         for (let i = 0; i < this.enemyShots.length; i++) {
             impact = impact || this.hasCollision(this.player, this.enemyShots[i]);
         }
@@ -106,6 +105,7 @@ class Game {
             this.player.die();
         }
         let killed = false;
+
         for (let i = 0; i < this.playerShots.length; i++) {
             killed = killed || this.hasCollision(this.enemy, this.playerShots[i]);
         }
@@ -126,6 +126,7 @@ class Game {
         if (b1 < item2.y || item1.y > b2 || r1 < item2.x || item1.x > r2) {
             return false;
         }
+
         return true;
     }
 
@@ -143,13 +144,7 @@ class Game {
         if (!this.ended) {
             this.player.update();
             if (this.enemy === undefined) {
-                const height = ENEMY_HEIGHT * this.width / 100,
-                    width = ENEMY_WIDTH * this.width / 100,
-                    x = getRandomNumber(this.width - width),
-                    y = 0,
-                    myImage = new Image(width, height);
-                myImage.src = "assets/malo.png";
-                this.enemy = new Enemy(this, width, height, x, y, ENEMY_SPEED, myImage);
+                this.enemy = new Enemy(this);
             }
             this.enemy.update();
             this.playerShots.forEach((shot) => {

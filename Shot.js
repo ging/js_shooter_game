@@ -1,18 +1,13 @@
-class Shot {
+class Shot extends Entity {
     constructor (game, character) {
-        this.game = game;
-        this.speed = 20;
+        const x = character.x;
+        const y = character.y;
+        const width = SHOT_WIDTH * game.width / 100;
+        const height = SHOT_HEIGHT * game.width / 100;
+        const speed = SHOT_SPEED;
+        const myImage = character.type === "PLAYER" ? "assets/shot1.png" : "assets/shot2.png";
+        super(game, width, height, x, y, speed, myImage);
         this.type = character instanceof Player ? "PLAYER" : "ENEMY";
-        this.height = SHOT_HEIGHT * this.game.width / 100;
-        this.width = SHOT_WIDTH * this.game.width / 100;
-        this.myImage = new Image(this.width, this.height);
-        this.myImage.src = this.type === "PLAYER" ? "assets/shot1.png" : "assets/shot2.png";
-        this.myImage.style.position = "absolute";
-        this.x = character.x;
-        this.y = character.y;
-        this.myImage.style.top = `${this.y}px`;
-        this.myImage.style.left = `${this.x}px`;
-        document.body.appendChild(this.myImage);
     }
 
     update () {
@@ -25,10 +20,5 @@ class Shot {
             this.game.removeShot(this);
             document.body.removeChild(this.myImage);
         }
-    }
-
-    render () {
-        this.myImage.style.top = `${this.y}px`;
-        this.myImage.style.left = `${this.x}px`;
     }
 }

@@ -1,30 +1,28 @@
 class Player extends Character {
-    constructor (game, width, height, x, y, speed, myImage) {
-        super(game, width, height, x, y, speed, myImage);
+    constructor (game) {
+        const height = PLAYER_HEIGHT * game.width / 100,
+            width = PLAYER_WIDTH * game.width / 100,
+            x = game.width / 2 - width / 2,
+            y = game.height - height,
+            speed = PLAYER_SPEED,
+            myImage = "assets/bueno.png",
+            myImageDead = "assets/bueno_muerto.png";
+
+        super(game, width, height, x, y, speed, myImage, myImageDead);
     }
 
-    die () {
-        if (!this.dead) {
-            this.myImage.src = "assets/bueno_muerto.png";
-            this.dead = true;
-            setTimeout(() => {
-                    this.game.endGame();
-                    document.body.removeChild(this.myImage);
-                }, 2000
-            );
-        }
-    }
+
     update () {
         if (!this.dead) {
             switch (this.game.keyPressed) {
             case KEY_LEFT:
                 if (this.x > this.speed) {
-                    this.x = this.x - this.speed;
+                    this.x -= this.speed;
                 }
                 break;
             case KEY_RIGHT:
                 if (this.x < this.game.width - this.width - this.speed) {
-                    this.x = this.x + this.speed;
+                    this.x += this.speed;
                 }
                 break;
             case KEY_SHOOT:

@@ -1,20 +1,24 @@
-class Character {
-    constructor (game, width, height, x, y, speed, myImage) {
+class Character extends Entity {
+    constructor (game, width, height, x, y, speed, myImage, myImageDead) {
+        super(game, width, height, x, y, speed, myImage, myImageDead);
         this.dead = false;
-        this.game = game;
-        this.width = width;
-        this.height = height;
-        this.x = x;
-        this.y = y;
-        this.speed = speed;
-        this.myImage = myImage;
-        this.myImage.style.position = "absolute";
-        this.myImage.style.top = `${this.y}px`;
-        this.myImage.style.left = `${this.x}px`;
-        document.body.appendChild(this.myImage);
+        this.myImageDead = myImageDead;
     }
-    render () {
-        this.myImage.style.top = `${this.y}px`;
-        this.myImage.style.left = `${this.x}px`;
+
+    die() {
+        if (!this.dead) {
+            this.myImage.src = this.myImageDead;
+            this.dead = true;
+            setTimeout(() => {
+                console.log(this, typeof this)
+                if (this instanceof Player) {
+                    this.game.endGame();
+                } else {
+                    this.game.removeEnemy();
+                }
+                document.body.removeChild(this.myImage);
+            }, 2000);
+        }
     }
 }
+
