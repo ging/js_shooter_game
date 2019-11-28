@@ -132,12 +132,8 @@ class Game {
 
     endGame () {
         this.ended = true;
-        this.myImage = new Image(this.width / 2, this.height / 2);
-        this.myImage.src = "assets/game_over.jpg";
-        this.myImage.style.position = "absolute";
-        this.myImage.style.top = `${this.height / 4}px`;
-        this.myImage.style.left = `${this.width / 4}px`;
-        document.body.appendChild(this.myImage);
+        let gameOver = new Entity(this, this.width / 2, this.height / 2, this.width / 4, this.height / 4, 0, "assets/game_over.jpg")
+        gameOver.render();
     }
 
     update () {

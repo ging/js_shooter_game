@@ -31,4 +31,13 @@ class Player extends Character {
             }
         }
     }
+
+    die() {
+        if (!this.dead) {
+            setTimeout(() => {
+                this.game.endGame();
+            }, 2000);
+            super.die();
+        }
+    }
 }

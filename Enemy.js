@@ -45,4 +45,15 @@
             }
         }
     }
+
+    die() {
+        
+        if (!this.dead) {
+            setTimeout(() => {
+                this.game.removeEnemy();
+            }, 2000);
+            super.die();
+        }
+
+    }
 }
