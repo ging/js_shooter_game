@@ -24,8 +24,7 @@
         if (!this.dead && !this.game.ended) {
             this.y += this.speed;
             if (this.y > this.game.height) {
-                this.game.removeEnemy();
-                document.body.removeChild(this.myImage);
+                this.y = 0;
             }
             if (this.direction === "R") { // Right movement
                 if (this.x < this.game.width - this.width - this.speed) {
