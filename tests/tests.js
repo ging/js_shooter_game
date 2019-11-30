@@ -6,7 +6,7 @@
 const should = require('chai').should();
 const path = require('path');
 const fs = require('fs-extra');
-const Utils = require('./utils');
+const Utils = require('./testutils');
 const to = require('./to');
 const Browser = require('zombie');
 
@@ -16,11 +16,11 @@ let error_critical = null;
 // CONSTANTS
 const T_TEST = 2 * 60; // Time between tests (seconds)
 const browser = new Browser();
-const path_assignment = path.resolve(path.join(__dirname, "../quiz_MVC_client.html"));
+const path_assignment = path.resolve(path.join(__dirname, "../index.html"));
 const URL = "file://"+path_assignment.replace("%", "%25");
 
 //TESTS
-describe("CORE19-06_quiz_mvc_client", function () {
+describe("MOOC_game", function () {
 
     this.timeout(T_TEST * 1000);
 
@@ -55,71 +55,33 @@ describe("CORE19-06_quiz_mvc_client", function () {
     });
 
     it('', async function () {
-        this.name = `3: Checking 'New' implementation...`;
-        this.score = 4;
+        this.name = `3(Precheck): Checking 'Game' instance...`;
+        this.score = 1;
         if (error_critical) {
             this.msg_err = error_critical;
             should.not.exist(error_critical);
         } else {
-            const expected = "Question 1";
             [error_nav, resp] = await to(browser.visit(URL));
             if (error_nav) {
                 this.msg_err = `Couldn't find '${expected}' in ${path_assignment}\nError:${error_nav}\nReceived:${browser.text('body')}`;
             }
-            [error_nav, resp] = await to(browser.click('.new'));
-            if (error_nav) {
-                this.msg_err = `Couldn't find '${expected}' in ${path_assignment}\nError:${error_nav}\nReceived:${browser.text('body')}`;
-            }
-            [error_nav, resp] = await to(browser.fill('#question', "Question 1"));
-            if (error_nav) {
-                this.msg_err = `Couldn't find '${expected}' in ${path_assignment}\nError:${error_nav}\nReceived:${browser.text('body')}`;
-            }
-            [error_nav, resp] = await to(browser.fill('#answer', "Answer 1"));
-            if (error_nav) {
-                this.msg_err = `Couldn't find '${expected}' in ${path_assignment}\nError:${error_nav}\nReceived:${browser.text('body')}`;
-            }
-            [error_nav, resp] = await to(browser.click('.create'));
-            this.msg_ok = `Found '${expected}' in ${path_assignment}`;
-            this.msg_err = `Couldn't find '${expected}' in ${path_assignment}\n\t\t\tError:${error_nav}\n\t\t\tReceived:${browser.text('body')}`;
-            Utils.search(expected, browser.text('body')).should.be.equal(true);
+            this.msg_ok = `Found game instance`;
+            this.msg_err = `Game is not started`;
+            browser.window.game.started.should.be.equal(true);
         }
     });
 
     it('', async function () {
-        this.name = `4: Checking 'Delete' implementation...`;
+        this.name = `4: Checking 'Score' element...`;
         this.score = 3;
         if (error_critical) {
             this.msg_err = error_critical;
             should.not.exist(error_critical);
         } else {
-            const expected = 3;
             [error_nav, resp] = await to(browser.visit(URL));
-            [error_nav, resp] = await to(browser.click('button[quizid="0"].delete'));
-            this.msg_err = `Wrong number of quizzes in ${path_assignment}\n\t\t\tExpected:${expected}\n\t\t\tFound:${browser.querySelectorAll('span').length}`;
-            browser.querySelectorAll('span').length.should.be.equal(expected);
+            this.msg_ok = "Found score"
+            this.msg_err = `Element with id "scoreli" contained ${browser.html("#scoreli") || "nothing"} instead of the score in the format specified in the task assignment`;
+            browser.assert.text('#scoreli', /Score.*/).should.be.equal(true);
         }
     });
-
-    it('', async function () {
-        this.name = `5: Checking 'Reset' implementation...`;
-        this.score = 3;
-        if (error_critical) {
-            this.msg_err = error_critical;
-            should.not.exist(error_critical);
-        } else {
-            const expected = 4;
-            [error_nav, resp] = await to(browser.visit(URL));
-            [error_nav, resp] = await to(browser.click('.new'));
-            [error_nav, resp] = await to(browser.fill('#question', "Question 1"));
-            [error_nav, resp] = await to(browser.fill('#answer', "Answer 1"));
-            [error_nav, resp] = await to(browser.click('.create'));
-            [error_nav, resp] = await to(browser.click('button[quizid="0"].delete'));
-            [error_nav, resp] = await to(browser.click('button[quizid="1"].delete'));
-            [error_nav, resp] = await to(browser.click('.reset'));
-            this.msg_ok = `Reset successfully implemented in ${path_assignment}`;
-            this.msg_err = `Wrong number of quizzes in ${path_assignment}\n\t\t\tExpected:${expected}\n\t\t\tFound:${browser.querySelectorAll('span').length}`;
-            browser.querySelectorAll('span').length.should.be.equal(expected);
-        }
-    });
-
 });

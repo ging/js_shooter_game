@@ -22,9 +22,9 @@ function collision (div1, div2) {
     return !(a.bottom < b.top || a.top > b.bottom || a.right < b.left || a.left > b.right);
 
 }
-
+var game;
 document.addEventListener("DOMContentLoaded", () => {
-        const game = new Game();
+        game = new Game();
         game.start();
     }
 );

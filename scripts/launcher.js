@@ -51,10 +51,13 @@ Utils.checkTestVersion(githubURL, "package.json").then(async (res)=>{
           await Utils.compress(ZIP_FILE);
           await Utils.sendFile(autoCOREctorURL, ZIP_FILE);
           console.log("The END!");
-        }
+        } 
+        process.exit(0);
     } catch (err){
         console.log(error(err));
+        process.exit(0);
     }
 }).catch((err)=>{
   console.log(error(err));
+        process.exit(0);
 });
