@@ -1,4 +1,12 @@
+/**
+ * Disparo de un Character. Hereda de la clase Entity
+ */
 class Shot extends Entity {
+    /**
+     * Inicializa un disparo
+     * @param game {Game} La instancia del juego al que pertenece el personaje
+     * @param character {Character} Personaje del juego que lanza el disparo
+     */
     constructor (game, character) {
         const width = SHOT_WIDTH * game.width / 100;
         const height = SHOT_HEIGHT * game.width / 100;
@@ -7,9 +15,11 @@ class Shot extends Entity {
         const speed = SHOT_SPEED;
         const myImage = character.type === "PLAYER" ? "assets/shot1.png" : "assets/shot2.png";
         super(game, width, height, x, y, speed, myImage);
-        this.type = character instanceof Player ? "PLAYER" : "ENEMY";
+        this.type = character instanceof Player ? "PLAYER" : "ENEMY"; // Tipo del personaje que lanza el disparo
     }
-
+    /**
+     * Actualiza los atributos de posición del disparo
+     */
     update () {
         if (this.type === "PLAYER") {
             this.y = this.y - this.speed; // Goes up

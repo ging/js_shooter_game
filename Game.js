@@ -1,17 +1,26 @@
+/**
+ * El propio juego
+ */
 class Game {
+    /**
+     * Inicializa un juego
+     */
     constructor () {
-        this.started = false;
-        this.ended = false;
-        this.keyPressed = undefined;
-        this.width = 0;
-        this.height = 0;
-        this.player = undefined;
-        this.playerShots = [];
-        this.enemy = undefined;
-        this.enemyShots = [];
-        this.xDown = null; // For touch events
+        this.started = false; // Indica si el juego ha comenzado o no
+        this.ended = false; // Indica si el juego ha terminado o no
+        this.keyPressed = undefined; // Indica la tecla que está pulsando el usuario
+        this.width = 0; // Ancho de la pantalla del juego
+        this.height = 0; // Alto de la pantalla del juego
+        this.player = undefined; // Instancia del personaje principal del juego
+        this.playerShots = []; // Disparos del personaje principal
+        this.enemy = undefined; // Instancia del monstruo del juego
+        this.enemyShots = []; // Disparos del monstruo
+        this.xDown = null; //  Posición en la que el usuario ha tocado la pantalla
     }
 
+    /**
+     * Da comienzo a la partida
+     */
     start () {
         if (!this.started) {
             // RequestAnimationFrame(this.update());
@@ -28,6 +37,10 @@ class Game {
         }
     }
 
+    /**
+     * Añade un nuevo disparo al juego, ya sea del monstruo o del personaje principal
+     * @param character {Character} Personaje que dispara
+     */
     shoot (character) {
         const arrayShots = character instanceof Player ? this.playerShots : this.enemyShots;
 
@@ -35,6 +48,10 @@ class Game {
         this.keyPressed = undefined;
     }
 
+    /**
+     * Elimina un disparo del juego cuando se sale de la pantalla o el juego se acaba
+     * @param shot {Shot} Disparo que se quiere eliminar
+     */
     removeShot (shot) {
         const shotsArray = shot.type === "PLAYER" ? this.playerShots : this.enemyShots,
             index = shotsArray.indexOf(shot);
@@ -44,10 +61,18 @@ class Game {
         }
     }
 
+    /**
+     * Elimina al monstruo del juego
+     */
     removeEnemy () {
         this.enemy = undefined;
     }
 
+    /**
+     * Comprueba la tecla que está pulsando el usuario
+     * @param event {Event} Evento de tecla levantada/pulsada
+     * @param isKeyDown {Boolean} Indica si la tecla está pulsada (true) o no (false)
+     */
     checkKey (event, isKeyDown) {
         if (!isKeyDown) {
             this.keyPressed = undefined;
@@ -66,10 +91,19 @@ class Game {
         }
     }
 
+    /**
+     * Comprueba la posición de la pantalla que está tocando el usuario
+     * @param evt {Event} Evento de tocar la pantalla
+     * @returns {*} Posición de la pantalla que está tocando el usuario
+     */
     getTouches (evt) {
         return evt.touches || evt.originalEvent.touches;
     }
 
+    /**
+     * Maneja el evento de tocar sobre la pantalla
+     * @param evt {Event} Evento de tocar la pantalla
+     */
     handleTouchStart (evt) {
         const firstTouch = this.getTouches(evt)[0];
 
@@ -77,6 +111,10 @@ class Game {
         this.keyPressed = KEY_SHOOT;
     }
 
+    /**
+     * Maneja el evento de arrastrar el dedo sobre la pantalla
+     * @param evt {Event} Evento de arrastrar el dedo sobre la pantalla
+     */
     handleTouchMove (evt) {
         if (!this.xDown) {
             return;
@@ -94,6 +132,9 @@ class Game {
         this.xDown = null; /* Reset values */
     }
 
+    /**
+     * Comrpueba si el personaje principal y el monstruo se han chocado entre sí o con los disparos haciendo uso del método hasCollision
+     */
     checkCollisions () {
         // Player can collide with enemy or shots
         let impact = false;
@@ -114,6 +155,12 @@ class Game {
         }
     }
 
+    /**
+     * Comprueba si dos elementos del juego se están chocando
+     * @param item1 {Entity} Elemento del juego 1
+     * @param item2 {Entity} Elemento del juego 2
+     * @returns {boolean} Devuelve true si se están chocando y false si no.
+     */
     hasCollision (item1, item2) {
         if (item2 === undefined) {
             return false; // When enemy is undefined, there is no collision
@@ -130,12 +177,18 @@ class Game {
         return true;
     }
 
+    /**
+     * Termina el juego
+     */
     endGame () {
         this.ended = true;
         let gameOver = new Entity(this, this.width / 2, this.height / 2, this.width / 4, this.height / 4, 0, "assets/game_over.jpg")
         gameOver.render();
     }
 
+    /**
+     * Actualiza los elementos del juego
+     */
     update () {
         if (!this.ended) {
             this.player.update();
@@ -154,6 +207,9 @@ class Game {
         }
     }
 
+    /**
+     * Muestra todos los elementos del juego en la pantalla
+     */
     render () {
         this.player.render();
         if (this.enemy !== undefined) {

@@ -1,4 +1,10 @@
- class Enemy extends Character {
+/**
+ * Monstruo al que tenemos que destruir
+ */
+class Enemy extends Character {
+    /**
+     * @param game {Game} La instancia del juego al que pertenece el personaje
+     */
     constructor (game) {
         const height = ENEMY_HEIGHT * game.width / 100,
             width = ENEMY_WIDTH * game.width / 100,
@@ -9,10 +15,13 @@
             myImageDead = "assets/malo_muerto.png";
 
         super(game, width, height, x, y, speed, myImage, myImageDead);
-        this.direction = "R";
+        this.direction = "R"; // Dirección hacia la que se mueve el monstruo
         setTimeout(() => this.shoot(), 1000 + getRandomNumber(2500));
     }
 
+    /**
+     * Crea un nuevo disparo
+     */
     shoot () {
         if (!this.dead && !this.game.ended) {
             this.game.shoot(this);
@@ -20,6 +29,9 @@
         }
     }
 
+    /**
+     * Actualiza los atributos de posición del monstruo
+     */
     update () {
         if (!this.dead && !this.game.ended) {
             this.y += this.speed;
@@ -45,6 +57,9 @@
         }
     }
 
+    /**
+     * Mata al monstruo
+     */
     die() {
         
         if (!this.dead) {
