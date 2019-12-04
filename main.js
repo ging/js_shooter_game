@@ -1,16 +1,16 @@
 const ENEMY_HEIGHT = 5,
-    ENEMY_SPEED = 5,
-    ENEMY_WIDTH = 10,
+ENEMY_SPEED = 5,
+    ENEMY_WIDTH = 5,
     KEY_LEFT = "LEFT",
     KEY_RIGHT = "RIGHT",
     KEY_SHOOT = "SHOOT",
     MIN_TOUCHMOVE = 20,
-    PLAYER_HEIGHT = 6.6,
+    PLAYER_HEIGHT = 5,
     PLAYER_SPEED = 20,
-    PLAYER_WIDTH = 5.6,
-    SHOT_HEIGHT = 3,
+    PLAYER_WIDTH = 5,
+    SHOT_HEIGHT = 1.5,
     SHOT_SPEED = 20,
-    SHOT_WIDTH = 3;
+    SHOT_WIDTH = 1.5;
 
 function getRandomNumber (range) {
     return Math.floor(Math.random() * range);
