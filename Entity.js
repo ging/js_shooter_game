@@ -21,6 +21,7 @@ class Entity {
         this.speed = speed;
         this.myImage = new Image();
         this.myImage.src = myImage;
+        this.myImage.className =  this.constructor.name;
         this.myImage.style.position = "absolute";
         this.myImage.style.height = this.height === "auto" ? "auto" : `${this.height}px`;
         this.myImage.style.width = this.width === "auto" ? "auto" : `${this.width}px`;
