@@ -182,7 +182,7 @@ class Game {
      */
     endGame () {
         this.ended = true;
-        let gameOver = new Entity(this, this.width / 2, this.height / 2, this.width / 4, this.height / 4, 0, "assets/game_over.jpg")
+        let gameOver = new Entity(this, this.width / 2, this.height / 2, this.width / 4, this.height / 4, 0, GAME_OVER_PICTURE)
         gameOver.render();
     }
 
