@@ -2,7 +2,7 @@ html {
   overflow: hidden;
 }
 
-.Enemy {
+.Opponent {
 	-webkit-animation: rotation 3s infinite linear;
 }
 

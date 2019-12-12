@@ -13,8 +13,8 @@ class Game {
         this.height = 0; // Alto de la pantalla del juego
         this.player = undefined; // Instancia del personaje principal del juego
         this.playerShots = []; // Disparos del personaje principal
-        this.enemy = undefined; // Instancia del monstruo del juego
-        this.enemyShots = []; // Disparos del monstruo
+        this.opponent = undefined; // Instancia del oponente del juego
+        this.opponentShots = []; // Disparos del oponente
         this.xDown = null; //  Posición en la que el usuario ha tocado la pantalla
     }
 
@@ -38,11 +38,11 @@ class Game {
     }
 
     /**
-     * Añade un nuevo disparo al juego, ya sea del monstruo o del personaje principal
+     * Añade un nuevo disparo al juego, ya sea del oponente o del personaje principal
      * @param character {Character} Personaje que dispara
      */
     shoot (character) {
-        const arrayShots = character instanceof Player ? this.playerShots : this.enemyShots;
+        const arrayShots = character instanceof Player ? this.playerShots : this.opponentShots;
 
         arrayShots.push(new Shot(this, character));
         this.keyPressed = undefined;
@@ -53,7 +53,7 @@ class Game {
      * @param shot {Shot} Disparo que se quiere eliminar
      */
     removeShot (shot) {
-        const shotsArray = shot.type === "PLAYER" ? this.playerShots : this.enemyShots,
+        const shotsArray = shot.type === "PLAYER" ? this.playerShots : this.opponentShots,
             index = shotsArray.indexOf(shot);
 
         if (index > -1) {
@@ -62,10 +62,10 @@ class Game {
     }
 
     /**
-     * Elimina al monstruo del juego
+     * Elimina al oponente del juego
      */
-    removeEnemy () {
-        this.enemy = undefined;
+    removeOpponent () {
+        this.opponent = undefined;
     }
 
     /**
@@ -133,25 +133,24 @@ class Game {
     }
 
     /**
-     * Comrpueba si el personaje principal y el monstruo se han chocado entre sí o con los disparos haciendo uso del método hasCollision
+     * Comrpueba si el personaje principal y el oponente se han chocado entre sí o con los disparos haciendo uso del método hasCollision
      */
     checkCollisions () {
-        // Player can collide with enemy or shots
         let impact = false;
 
-        for (let i = 0; i < this.enemyShots.length; i++) {
-            impact = impact || this.hasCollision(this.player, this.enemyShots[i]);
+        for (let i = 0; i < this.opponentShots.length; i++) {
+            impact = impact || this.hasCollision(this.player, this.opponentShots[i]);
         }
-        if (impact || this.hasCollision(this.player, this.enemy)) {
+        if (impact || this.hasCollision(this.player, this.opponent)) {
             this.player.die();
         }
         let killed = false;
 
         for (let i = 0; i < this.playerShots.length; i++) {
-            killed = killed || this.hasCollision(this.enemy, this.playerShots[i]);
+            killed = killed || this.hasCollision(this.opponent, this.playerShots[i]);
         }
         if (killed) {
-            this.enemy.die();
+            this.opponent.die();
         }
     }
 
@@ -163,7 +162,7 @@ class Game {
      */
     hasCollision (item1, item2) {
         if (item2 === undefined) {
-            return false; // When enemy is undefined, there is no collision
+            return false; // When opponent is undefined, there is no collision
         }
         const b1 = item1.y + item1.height,
             r1 = item1.x + item1.width,
@@ -192,14 +191,14 @@ class Game {
     update () {
         if (!this.ended) {
             this.player.update();
-            if (this.enemy === undefined) {
-                this.enemy = new Enemy(this);
+            if (this.opponent === undefined) {
+                this.opponent = new Opponent(this);
             }
-            this.enemy.update();
+            this.opponent.update();
             this.playerShots.forEach((shot) => {
                 shot.update();
             });
-            this.enemyShots.forEach((shot) => {
+            this.opponentShots.forEach((shot) => {
                 shot.update();
             });
             this.checkCollisions();
@@ -212,13 +211,13 @@ class Game {
      */
     render () {
         this.player.render();
-        if (this.enemy !== undefined) {
-            this.enemy.render();
+        if (this.opponent !== undefined) {
+            this.opponent.render();
         }
         this.playerShots.forEach((shot) => {
             shot.render();
         });
-        this.enemyShots.forEach((shot) => {
+        this.opponentShots.forEach((shot) => {
             shot.render();
         });
     }

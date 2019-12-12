@@ -1,8 +1,8 @@
-const ENEMY_HEIGHT = 5,
-    ENEMY_PICTURE = "assets/malo.png",
-    ENEMY_PICTURE_DEAD = "assets/malo_muerto.png",
-    ENEMY_SPEED = 5,
-    ENEMY_WIDTH = 5,
+const OPPONENT_HEIGHT = 5,
+    OPPONENT_PICTURE = "assets/malo.png",
+    OPPONENT_PICTURE_DEAD = "assets/malo_muerto.png",
+    OPPONENT_SPEED = 5,
+    OPPONENT_WIDTH = 5,
     GAME_OVER_PICTURE = "assets/game_over.png",
     KEY_LEFT = "LEFT",
     KEY_RIGHT = "RIGHT",
@@ -16,7 +16,7 @@ const ENEMY_HEIGHT = 5,
     SHOT_HEIGHT = 1.5,
     SHOT_SPEED = 20,
     SHOT_PICTURE_PLAYER = "assets/shot1.png",
-    SHOT_PICTURE_ENEMY = "assets/shot2.png",
+    SHOT_PICTURE_OPPONENT = "assets/shot2.png",
     SHOT_WIDTH = 1.5;
 
 function getRandomNumber (range) {
