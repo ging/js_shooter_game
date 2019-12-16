@@ -181,4 +181,8 @@ describe("MOOC_game", function () {
         }
 
     });
+
+    after(function() {
+        browser.tabs.closeAll(); 
+    });
 });
