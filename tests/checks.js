@@ -183,6 +183,10 @@ describe("MOOC_game", function () {
     });
 
     after(function() {
-        browser.tabs.closeAll(); 
+        try {
+            browser.tabs.closeAll(); 
+        } catch(e) {
+            console.error(e)
+        }
     });
 });
