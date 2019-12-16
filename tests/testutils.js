@@ -1,9 +1,29 @@
-const _ = require("underscore");
+const fs = require('fs').promises;
 const path = require("path");
+
+const REG_URL = /(\b(http|ftp|https|ftps):\/\/[-A-ZáéíóúÁÉÍÓÚ0-9+&@#\/%?=~_|!:,.;]*[-A-ZáéíóúÁÉÍÓÚ0-9+&@#\/%=~_|])/ig;
 
 const TestUtils = {};
 
-const REG_URL = /(\b(http|ftp|https|ftps):\/\/[-A-ZáéíóúÁÉÍÓÚ0-9+&@#\/%?=~_|!:,.;]*[-A-ZáéíóúÁÉÍÓÚ0-9+&@#\/%=~_|])/ig;
+
+TestUtils.checkFileExists = (filepath) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      await fs.access(filepath, fs.F_OK);
+      resolve(true);
+    } catch (err) {
+      resolve(false);
+    }
+  });
+};
+
+TestUtils.to = (promise) => {
+    return promise
+        .then(data => {
+            return [null, data];
+        })
+        .catch(err => [err]);
+};
 
 TestUtils.getURL = (string) => {
     const urls = string.match(REG_URL);
@@ -15,15 +35,15 @@ TestUtils.getURL = (string) => {
 };
 
 TestUtils.exists = (thing) => {
-    return !_.isUndefined(thing) && !_.isNull(thing);
+    return thing!==undefined && thing!==null;
 };
 
 TestUtils.isString = (thing) => {
-    return _.isString(thing);
+    return typeof thing === 'string' || thing instanceof String;
 };
 
 TestUtils.isObject = (thing) => {
-    return _.isObject(thing);
+    return typeof thing === 'object' || thing instanceof Object;
 };
 
 TestUtils.isNumber = (thing) => {
@@ -35,7 +55,7 @@ TestUtils.isNumber = (thing) => {
 };
 
 TestUtils.isArray = (thing) => {
-    return _.isArray(thing);
+    return typeof thing === 'array' || thing instanceof Array;
 };
 
 TestUtils.isURL = (thing) => {
