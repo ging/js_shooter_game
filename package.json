@@ -15,30 +15,10 @@
   ],
   "author": "ging",
   "license": "Unlicense",
-  "dependencies": {
-    "@octokit/rest": "^16.33.1",
-    "archiver": "3.1.1",
-    "chai": "4.2.0",
-    "chalk": "2.4.2",
-    "figlet": "1.2.4",
-    "fs-extra": "8.1.0",
-    "mocha": "6.2.1",
-    "needle": "^2.4.0",
-    "object-hash": "^2.0.0",
-    "underscore": "1.9.1",
-    "zombie": "^6.1.4"
-  },
   "info": {
     "githubURL": "sonsoleslp/js_shooter_game",
-    "serverUrl": "http://138.4.7.156/",
+    "serverUrl": "https://autocorector.dit.upm.es/",
     "courseId": "8249",
     "assignmentId": "74633"
-  },
-  "devDependencies": {
-    "terser-webpack-plugin": "^2.2.1",
-    "uglifyjs-webpack-plugin": "^2.2.0",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10",
-    "webpack-node-externals": "^1.7.2"
   }
 }
