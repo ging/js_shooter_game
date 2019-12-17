@@ -185,8 +185,6 @@ describe("MOOC_game", function () {
     after(async function() {
         try {
             await browser.tabs.closeAll(); 
-        } catch(e) {
-            console.error(e)
-        }
+        } catch(e) {}
     });
 });
