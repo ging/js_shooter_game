@@ -182,9 +182,9 @@ describe("MOOC_game", function () {
 
     });
 
-    after(function() {
+    after(async function() {
         try {
-            browser.tabs.closeAll(); 
+            await browser.tabs.closeAll(); 
         } catch(e) {
             console.error(e)
         }
