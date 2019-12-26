@@ -22,3 +22,13 @@ html {
 		-webkit-transform: rotate(359deg);
 	}
 }
+
+#pause {
+	border: none;
+	background: #ddd;
+	color: #333;
+	padding: 10px 20px;
+	outline: none;
+	font-family: monospace;
+	cursor: pointer;
+}	
