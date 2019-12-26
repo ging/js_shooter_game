@@ -43,14 +43,13 @@ class Game {
      */
     pauseOrResume() {
         if (this.paused) {
-            this.paused = false;
             this.timer = setInterval(() => this.update(), 50);
             document.body.classList.remove('paused');
+            this.paused = false;
         } else {
             clearInterval(this.timer);
             document.body.classList.add('paused');
             this.paused = true;
-
         }
     }
     /**

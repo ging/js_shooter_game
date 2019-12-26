@@ -22,9 +22,11 @@ class Opponent extends Character {
     /**
      * Crea un nuevo disparo
      */
-    shoot () {
-        if (!this.dead && !this.game.ended && !this.game.paused) {
-            this.game.shoot(this);
+shoot () {
+        if (!this.dead && !this.game.ended) {
+            if (!this.game.paused) {
+                this.game.shoot(this);
+            }
             setTimeout(() => this.shoot(), 1000 + getRandomNumber(2500));
         }
     }
