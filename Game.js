@@ -16,6 +16,7 @@ class Game {
         this.opponent = undefined; // Instancia del oponente del juego
         this.opponentShots = []; // Disparos del oponente
         this.xDown = null; //  Posición en la que el usuario ha tocado la pantalla
+        this.paused = false; // Indica si el juego está pausado
     }
 
     /**
@@ -33,10 +34,25 @@ class Game {
             this.height = window.innerHeight; 
 
             this.player = new Player(this);
-            setInterval(() => this.update(), 50);
+            this.timer = setInterval(() => this.update(), 50);
         }
     }
 
+    /**
+     * Pausa o continúa el juego
+     */
+    pauseOrResume() {
+        if (this.paused) {
+            this.paused = false;
+            this.timer = setInterval(() => this.update(), 50);
+            document.body.classList.remove('paused');
+        } else {
+            clearInterval(this.timer);
+            document.body.classList.add('paused');
+            this.paused = true;
+
+        }
+    }
     /**
      * Añade un nuevo disparo al juego, ya sea del oponente o del personaje principal
      * @param character {Character} Personaje que dispara
@@ -78,15 +94,17 @@ class Game {
             this.keyPressed = undefined;
         } else {
             switch (event.keyCode) {
-            case 37: // Left arrow
+            case 37: // Flecha izquierda
                 this.keyPressed = KEY_LEFT;
                 break;
-            case 32: // Spacebar
+            case 32: // Barra espaciadora
                 this.keyPressed = KEY_SHOOT;
                 break;
-            case 39: // Right arrow
+            case 39: // Flecha derecha
                 this.keyPressed = KEY_RIGHT;
                 break;
+            case 27: case 81: // Tecla ESC o Q
+                this.pauseOrResume();
             }
         }
     }
