@@ -34,7 +34,6 @@ document.addEventListener("DOMContentLoaded", () => {
         game = new Game();
         game.start();
         document.getElementById("pause").addEventListener("click", (e) => {
-            e.target.innerHTML = game.paused ? "Pausar" : "Continuar";
             game.pauseOrResume();
         });
     }
