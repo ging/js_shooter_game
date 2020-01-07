@@ -29,11 +29,11 @@ describe("MOOC_game", function () {
         this.score = 0;
         this.msg_ok = `Found the file '${path_assignment}'`;
         this.msg_err = `Couldn't find the file '${path_assignment}'`;
-        const [error_path, path_ok] = await Utils.checkFileExists(fs.pathExists(path_assignment));
-        if (error_path) {
+        const fileexists = await Utils.checkFileExists(path_assignment);
+        if (!fileexists) {
             error_critical = this.msg_err;
         }
-        should.not.exist(error_critical);
+        fileexists.should.be.equal(true);
     });
 
     it('', async function () {
