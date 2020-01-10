@@ -14,6 +14,10 @@ En esta entrega vamos a desarrollar un juego completo usando HTML, CSS y JavaScr
 <p align="center">
   <img width="187" height="264" style="border: 1px solid grey;" src="https://raw.githubusercontent.com/sonsoleslp/js_shooter_game/master/assets/screenshot.png">
 </p>
+
+Puedes ver una demo [aquí](https://sonsoleslp.github.io/js_shooter_game/).
+
+
 ## Descargar el código del proyecto
 
 El proyecto se descarga en el ordenador local con estos comandos:
