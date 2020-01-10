@@ -6,10 +6,12 @@ Versión: 10 de Enero de 2020
 
 Practicar con clases, Booleans, Strings y con el manejo de eventos.
 
+
 ## Descripción de la práctica
 
 En esta entrega vamos a desarrollar un juego completo usando HTML, CSS y JavaScript. El juego consiste en un juego clásico de disparos, en el que manejaremos a nuestro personaje (cuadrado) utilizando las flechas del teclado o la pantalla táctil. El objetivo del juego es disparar a una serie de formas que aparecerán en la pantalla para convertirlas en estrellas, a la vez que esquivamos sus disparos. Para comenzar el desarrollo partimos de la versión básica del juego cuyo código proporcionamos.
 
+![screenshot](https://raw.githubusercontent.com/sonsoleslp/js_shooter_game/master/assets/screenshot.png)
 
 ## Descargar el código del proyecto
 
@@ -101,7 +103,7 @@ Para evaluar el fichero entregado, hay que descargarlo de la plataforma y compro
 
 **RÚBRICA**: Se puntuará el ejercicio a corregir sumando el % indicado a la nota total si la parte indicada es correcta:
 
--  **25%: ** Muestra correctamente las vidas del usuario
+-  **25%:** Muestra correctamente las vidas del usuario
 -  **25%:**  Muestra correctamente la puntuación del usuario
 -  **50%:**  La funcionalidad del oponente final está implementada correctamente
 
