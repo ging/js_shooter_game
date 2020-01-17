@@ -40,7 +40,7 @@ En este código, para modelar cada uno de los elementos del juego empleamos una 
 -  **Entity:** Cada uno de los elementos que se pintan en el juego
 -  **Character** : Cada uno de los personajes del juego, es decir, aquellos elementos que tienen "vida". Hereda de la clase _Entity_
 -  **Player** : Personaje principal del juego. Hereda de la clase _Character_
--  **Opponent** : Forma a la que tenemos que convertir en estrella
+-  **Opponent** : Forma a la que tenemos que convertir en estrella. Hereda de la clase _Character_
 -  **Shot** : Disparo de un _Character_. Hereda de la clase _Entity_
 -  **Game** : El propio juego
 
@@ -48,7 +48,7 @@ En el propio código están documentados todos los atributos y métodos de estas
 
 ## Comienzo y actualización del juego
 
-En el fichero ``game.html`` se importan todos los scripts necesarios para el funcionamiento del juego, entre los que figuran todas las clases necesarias y el fichero ``main.js``. En este fichero se definen una serie de constantes necesarias para el juego, se crea una instancia de la clase _Game_ y se llama a su método _start_ para comenzar la partida.
+En el fichero ``index.html`` se importan todos los scripts necesarios para el funcionamiento del juego, entre los que figuran todas las clases necesarias y el fichero ``main.js``. En este fichero se definen una serie de constantes necesarias para el juego, se crea una instancia de la clase _Game_ y se llama a su método _start_ para comenzar la partida.
 
 El método _start_ crea los personajes, pinta el juego según el tamaño de la pantalla e inicializa los escuchadores de eventos (los cuales veremos en el siguiente apartado). Adicionalmente, en este método se da comienzo a un temporizador que llama a la función _update_ cada 50 ms para actualizar y pintar el estado del juego actualizado según las acciones del usuario, de los movimientos del oponente y de la posición de los disparos. Este intervalo de tiempo es equivalente a 20 marcos por segundo, es decir, estamos cambiando lo que muestra el juego 20 veces cada segundo, más que suficiente para crear la ilusión de movimiento.
 
