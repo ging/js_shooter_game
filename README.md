@@ -1,6 +1,6 @@
 # Entrega - Juego de disparos
 
-Versión: 10 de Enero de 2020
+Versión: 23 de Enero de 2020
 
 ## Objetivo
 
@@ -84,9 +84,10 @@ Para implementar las tres funcionalidades debes seguir los siguientes pasos:
 
 ## Prueba de la práctica 
 
-Se puede utilizar un programa de corrección automática del desarrollo de esta entrega. Para utilizar esta herramienta debes tener node.js (y npm) ([https://nodejs.org/es/](https://nodejs.org/es/)) y Git instalados. Si no están instalados, puedes  realizar la practica sin utilizar el validador y probarla manualmente.
+Para ayudar al desarrollo, se provee una herramienta de autocorrección que prueba las distintas funcionalidades que se piden en el enunciado. Para utilizar esta herramienta debes tener node.js (y npm) ([https://nodejs.org/es/](https://nodejs.org/es/)) y Git instalados. 
 
 Para instalar y hacer uso de la [herramienta de autocorrección](https://www.npmjs.com/package/autocorector) en el ordenador local, ejecuta los siguientes comandos en el directorio del proyecto:
+
 ```
 $ npm install -g autocorector     ## Instala el programa de test
 $ autocorector                    ## Pasa los tests al fichero a entregar
@@ -100,11 +101,22 @@ $ npx autocorector             ## Pasa los tests al fichero a entregar
 ............................   ## en el directorio de trabajo
 ... (resultado de los tests)
 ```
+
+Se puede pasar la herramienta de autoorrección tantas veces como se desee sin ninguna repercusión en la calificación.
+
 ## Instrucciones para la Entrega y Evaluación.
 
-La entregar consiste en subir un **zip** a la plataforma con todos los ficheros de la práctica. Excluye la carpeta `node_modules` que se crea automáticamente al instalar el validador.
+Una vez satisfecho con su calificación, el alumno puede subir su entrega a Moodle con el siguiente comando:
+```
+$ autocorector upload
+```
+o, si se ha instalado como paquete local:
+```
+$ npx autocorector upload
+```
 
-Para evaluar el fichero entregado, hay que descargarlo de la plataforma y comprobar que funciona correctamente abriendo el fichero index.html en el navagador. También puedes hacer uso del validador y utilizar el resultado del mismo como nota.
+La herramienta de autocorrección preguntará por el correo del alumno y el token de Moodle. En el enlace [https://www.npmjs.com/package/autocorector](https://www.npmjs.com/package/autocorector) se proveen instrucciones para encontrar dicho token.
+
 
 **RÚBRICA**: Se puntuará el ejercicio a corregir sumando el % indicado a la nota total si la parte indicada es correcta:
 
@@ -114,6 +126,4 @@ Para evaluar el fichero entregado, hay que descargarlo de la plataforma y compro
 
 Si pasa todos los tests se dará la máxima puntuación.
 
-El objetivo de este curso es sacar el máximo provecho al trabajo dedicado y para ello lo mejor es utilizar las evaluaciones para ayudar al evaluado, especialmente a los principiantes. Al evaluar se debe dar comentarios sobre la corrección del código, su claridad, legibilidad, estructuración y documentación, siempre que puedan ayudar al evaluado.
-
-**¡Cuidado! Una vez enviadas, tanto la entrega, como la evaluación, no se pueden cambiar.**   Esperar a tener completa y revisada, tanto la entrega, como la evaluación antes de enviarlas.
+**¡Cuidado! Una vez enviadas, tanto la entrega, como la evaluación, no se pueden cambiar.**   
