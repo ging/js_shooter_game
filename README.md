@@ -1,6 +1,13 @@
-# Entrega - Juego de disparos
+<img  align="left" width="150" style="float: left;" src="https://www.upm.es/sfs/Rectorado/Gabinete%20del%20Rector/Logos/UPM/CEI/LOGOTIPO%20leyenda%20color%20JPG%20p.png">
+<img  align="right" width="60" style="float: right;" src="http://www.dit.upm.es/figures/logos/ditupm-big.gif">
 
-Versión: 10 de Enero de 2020
+
+<br/><br/>
+
+
+# Entrega 3 - Juego de disparos
+
+Versión: 23 de Enero de 2020
 
 ## Objetivo
 
@@ -40,7 +47,7 @@ En este código, para modelar cada uno de los elementos del juego empleamos una 
 -  **Entity:** Cada uno de los elementos que se pintan en el juego
 -  **Character** : Cada uno de los personajes del juego, es decir, aquellos elementos que tienen "vida". Hereda de la clase _Entity_
 -  **Player** : Personaje principal del juego. Hereda de la clase _Character_
--  **Opponent** : Forma a la que tenemos que convertir en estrella
+-  **Opponent** : Forma a la que tenemos que convertir en estrella. Hereda de la clase _Character_
 -  **Shot** : Disparo de un _Character_. Hereda de la clase _Entity_
 -  **Game** : El propio juego
 
@@ -48,7 +55,7 @@ En el propio código están documentados todos los atributos y métodos de estas
 
 ## Comienzo y actualización del juego
 
-En el fichero ``game.html`` se importan todos los scripts necesarios para el funcionamiento del juego, entre los que figuran todas las clases necesarias y el fichero ``main.js``. En este fichero se definen una serie de constantes necesarias para el juego, se crea una instancia de la clase _Game_ y se llama a su método _start_ para comenzar la partida.
+En el fichero ``index.html`` se importan todos los scripts necesarios para el funcionamiento del juego, entre los que figuran todas las clases necesarias y el fichero ``main.js``. En este fichero se definen una serie de constantes necesarias para el juego, se crea una instancia de la clase _Game_ y se llama a su método _start_ para comenzar la partida.
 
 El método _start_ crea los personajes, pinta el juego según el tamaño de la pantalla e inicializa los escuchadores de eventos (los cuales veremos en el siguiente apartado). Adicionalmente, en este método se da comienzo a un temporizador que llama a la función _update_ cada 50 ms para actualizar y pintar el estado del juego actualizado según las acciones del usuario, de los movimientos del oponente y de la posición de los disparos. Este intervalo de tiempo es equivalente a 20 marcos por segundo, es decir, estamos cambiando lo que muestra el juego 20 veces cada segundo, más que suficiente para crear la ilusión de movimiento.
 
@@ -84,9 +91,10 @@ Para implementar las tres funcionalidades debes seguir los siguientes pasos:
 
 ## Prueba de la práctica 
 
-Se puede utilizar un programa de corrección automática del desarrollo de esta entrega. Para utilizar esta herramienta debes tener node.js (y npm) ([https://nodejs.org/es/](https://nodejs.org/es/)) y Git instalados. Si no están instalados, puedes  realizar la practica sin utilizar el validador y probarla manualmente.
+Para ayudar al desarrollo, se provee una herramienta de autocorrección que prueba las distintas funcionalidades que se piden en el enunciado. Para utilizar esta herramienta debes tener node.js (y npm) ([https://nodejs.org/es/](https://nodejs.org/es/)) y Git instalados. 
 
 Para instalar y hacer uso de la [herramienta de autocorrección](https://www.npmjs.com/package/autocorector) en el ordenador local, ejecuta los siguientes comandos en el directorio del proyecto:
+
 ```
 $ npm install -g autocorector     ## Instala el programa de test
 $ autocorector                    ## Pasa los tests al fichero a entregar
@@ -100,11 +108,22 @@ $ npx autocorector             ## Pasa los tests al fichero a entregar
 ............................   ## en el directorio de trabajo
 ... (resultado de los tests)
 ```
+
+Se puede pasar la herramienta de autoorrección tantas veces como se desee sin ninguna repercusión en la calificación.
+
 ## Instrucciones para la Entrega y Evaluación.
 
-La entregar consiste en subir un **zip** a la plataforma con todos los ficheros de la práctica. Excluye la carpeta `node_modules` que se crea automáticamente al instalar el validador.
+Una vez satisfecho con su calificación, el alumno puede subir su entrega a Moodle con el siguiente comando:
+```
+$ autocorector upload
+```
+o, si se ha instalado como paquete local:
+```
+$ npx autocorector upload
+```
 
-Para evaluar el fichero entregado, hay que descargarlo de la plataforma y comprobar que funciona correctamente abriendo el fichero index.html en el navagador. También puedes hacer uso del validador y utilizar el resultado del mismo como nota.
+La herramienta de autocorrección preguntará por el correo del alumno y el token de Moodle. En el enlace [https://www.npmjs.com/package/autocorector](https://www.npmjs.com/package/autocorector) se proveen instrucciones para encontrar dicho token.
+
 
 **RÚBRICA**: Se puntuará el ejercicio a corregir sumando el % indicado a la nota total si la parte indicada es correcta:
 
@@ -114,6 +133,4 @@ Para evaluar el fichero entregado, hay que descargarlo de la plataforma y compro
 
 Si pasa todos los tests se dará la máxima puntuación.
 
-El objetivo de este curso es sacar el máximo provecho al trabajo dedicado y para ello lo mejor es utilizar las evaluaciones para ayudar al evaluado, especialmente a los principiantes. Al evaluar se debe dar comentarios sobre la corrección del código, su claridad, legibilidad, estructuración y documentación, siempre que puedan ayudar al evaluado.
-
-**¡Cuidado! Una vez enviadas, tanto la entrega, como la evaluación, no se pueden cambiar.**   Esperar a tener completa y revisada, tanto la entrega, como la evaluación antes de enviarlas.
+**¡Cuidado! Una vez enviadas, tanto la entrega, como la evaluación, no se pueden cambiar.**   

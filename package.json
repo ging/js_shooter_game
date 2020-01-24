@@ -9,7 +9,6 @@
     "checks": "node scripts/launcher.js"
   },
   "private": true,
-  "debug": true,
   "keywords": [
     "CORE"
   ],
