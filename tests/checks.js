@@ -24,8 +24,7 @@ describe("MOOC_game", function () {
 
     this.timeout(T_TEST * 1000);
 
-    it('', async function () {
-        this.name = `1(Precheck): Checking that the assignment file exists...`;
+    it("1(Precheck): Checking that the assignment file exists...", async function () {
         this.score = 0;
         this.msg_ok = `Found the file '${path_assignment}'`;
         this.msg_err = `Couldn't find the file '${path_assignment}'`;
@@ -36,8 +35,7 @@ describe("MOOC_game", function () {
         fileexists.should.be.equal(true);
     });
 
-    it('', async function () {
-        this.name = `2(Precheck): Checking that the assignment file contains valid html...`;
+    it("2(Precheck): Checking that the assignment file contains valid html...", async function () {
         this.score = 0;
         if (error_critical) {
             this.msg_err = error_critical;
@@ -54,8 +52,7 @@ describe("MOOC_game", function () {
         should.not.exist(error_critical);
     });
 
-    it('', async function () {
-        this.name = `3(Precheck): Checking 'Game' instance...`;
+    it("3(Precheck): Checking 'Game' instance...", async function () {
         this.score = 0;
         if (error_critical) {
             this.msg_err = error_critical;
@@ -71,8 +68,7 @@ describe("MOOC_game", function () {
         }
     });
 
-    it('', async function () {
-        this.name = `4: Checking 'Score' element exists...`;
+    it("4: Checking 'Score' element exists...", async function () {
         this.score = 1;
         if (error_critical) {
             this.msg_err = error_critical;
@@ -86,8 +82,7 @@ describe("MOOC_game", function () {
         }
     });
 
-    it('', async function () {
-        this.name = `5: Checking 'Lives' element exists...`;
+    it("5: Checking 'Lives' element exists...", async function () {
         this.score = 1;
         if (error_critical) {
             this.msg_err = error_critical;
@@ -101,8 +96,7 @@ describe("MOOC_game", function () {
         }
     });
 
-    it('', async function () {
-        this.name = `6: Checking 'Score' works...`;
+    it("6: Checking 'Score' works...", async function () {
         this.score = 1.5;
         if (error_critical) {
             this.msg_err = error_critical;
@@ -120,9 +114,7 @@ describe("MOOC_game", function () {
         }
     });
 
-
-    it('', async function () {
-        this.name = `7: Checking 'Lives' works...`;
+    it("7: Checking 'Lives' works...", async function () {
         this.score = 1.5;
         if (error_critical) {
             this.msg_err = error_critical;
@@ -141,8 +133,7 @@ describe("MOOC_game", function () {
         }
     });
 
-    it('', async function () {
-        this.name = `8: Checking Boss appears after opponent dies...`;
+    it("8: Checking Boss appears after opponent dies...", async function () {
         this.score = 2.5;
         if (error_critical) {
             this.msg_err = error_critical;
@@ -160,8 +151,7 @@ describe("MOOC_game", function () {
         }
 
     });
-    it('', async function () {
-        this.name = `9: Checking Boss's speed...`;
+    it("9: Checking Boss's speed...", async function () {
         this.score = 2.5;
         if (error_critical) {
             this.msg_err = error_critical;
