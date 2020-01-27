@@ -15,8 +15,8 @@
   "license": "Unlicense",
   "info": {
     "githubURL": "ging/js_shooter_game",
-    "serverUrl": "https://autocorector.dit.upm.es/",
+    "serverUrl": "http://localhost:3000/",
     "courseId": "8249",
-    "assignmentId": "74633"
+    "assignmentId": "76450"
   }
 }

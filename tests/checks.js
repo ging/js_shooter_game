@@ -15,7 +15,7 @@ const URL = "file://"+path_assignment.replace("%", "%25");
 describe("Juego", function () {
 
     this.timeout(T_TEST * 1000);
-
+  
     it("1(Precheck): Comprobando que existe el fichero de la entrega...", async function () {
         this.score = 0;
         this.msg_ok = `Encontrado el fichero '${path_assignment}'`;
@@ -160,7 +160,7 @@ describe("Juego", function () {
     });
 
     it("8: Comprobando que una instancia de 'Boss' aparece cuando muere el oponente...", async function () {
-        this.score = 2.5;
+        this.score = 2;
         if (error_critical) {
             this.msg_err = error_critical;
             should.not.exist(error_critical);
@@ -184,7 +184,7 @@ describe("Juego", function () {
 
     });
     it("9: Comprobando la velocidad del 'Boss'...", async function () {
-        this.score = 2.5;
+        this.score = 2;
         if (error_critical) {
            this.msg_err = error_critical;
            should.not.exist(error_critical);
@@ -208,6 +208,35 @@ describe("Juego", function () {
             this.msg_ok = "El 'Boss' se mueve al doble de velocidad que el oponente";
             this.msg_err =  "El 'Boss' NO se mueve al doble de velocidad que el oponente";
             bossSpeed.should.be.equal(opponentSpeed*2);
+        }
+
+    });
+
+    it("10: Comprobando que aparece la imagen de 'You win'...", async function () {
+        this.score = 1;
+        if (error_critical) {
+           this.msg_err = error_critical;
+           should.not.exist(error_critical);
+       } else {
+           [error_nav, resp] = await Utils.to(browser.visit(URL));
+
+           if (error_nav) {
+               this.msg_err = `Error al abrir el fichero ${path_assignment}
+               Error: ${error_nav}
+               Recibido: ${browser.text('body')}`;
+           }
+
+            this.msg_err = "No se encuentra la instancia de 'Game' en el JavaScript";
+            const { game } = browser.window;
+            this.msg_err = "Ha fallado el método 'die' del oponente";
+            game.opponent.die();
+            await browser.wait({ duration: 3000 });
+            game.opponent.die();
+            await browser.wait({ duration: 3000 });
+            this.msg_err =  "No aparece la imagen de 'You win' al ganar";
+            this.msg_ok = "La imagen de 'You win' aparece al ganar el juego";
+            const youWin = browser.html('img').match(/you_win\.png/).length > 0;
+            youWin.should.be.equal(true);
         }
 
     });

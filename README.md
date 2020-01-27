@@ -125,7 +125,7 @@ La herramienta de autocorrección preguntará por el correo del alumno y el toke
 
 **RÚBRICA**: Se puntuará el ejercicio a corregir sumando el % indicado a la nota total si la parte indicada es correcta:
 
--  **25%:** Muestra correctamente las vidas del usuario
+-  **25%:**  Muestra correctamente las vidas del usuario
 -  **25%:**  Muestra correctamente la puntuación del usuario
 -  **50%:**  La funcionalidad del oponente final está implementada correctamente
 
