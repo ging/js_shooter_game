@@ -7,7 +7,7 @@
 
 # Entrega 3 - Juego de disparos
 
-Versión: 23 de Enero de 2020
+Versión: 27 de Enero de 2020
 
 ## Objetivo
 
@@ -21,8 +21,6 @@ En esta entrega vamos a desarrollar un juego completo usando HTML, CSS y JavaScr
 <p align="center">
   <img width="187" height="264" style="border: 1px solid grey;" src="https://raw.githubusercontent.com/ging/js_shooter_game/master/assets/screenshot.png">
 </p>
-
-Puedes ver una demo [aquí](https://sonsoleslp.github.io/js_shooter_game/).
 
 
 ## Descargar el código del proyecto
@@ -115,11 +113,11 @@ Se puede pasar la herramienta de autoorrección tantas veces como se desee sin n
 
 Una vez satisfecho con su calificación, el alumno puede subir su entrega a Moodle con el siguiente comando:
 ```
-$ autocorector upload
+$ autocorector --upload
 ```
 o, si se ha instalado como paquete local:
 ```
-$ npx autocorector upload
+$ npx autocorector --upload
 ```
 
 La herramienta de autocorrección preguntará por el correo del alumno y el token de Moodle. En el enlace [https://www.npmjs.com/package/autocorector](https://www.npmjs.com/package/autocorector) se proveen instrucciones para encontrar dicho token.
