@@ -1,14 +1,13 @@
 {
-  "name": "CORE19-03_quiz_cmd",
+  "name": "CORE20-03_Juego",
   "version": "1.0.0",
-  "description": "CORE19-03_quiz_cmd",
+  "description": "CORE20-03_Juego",
   "main": "main.js",
   "scripts": {
     "start": "node main.js",
     "upload": "node scripts/launcher.js upload",
     "checks": "node scripts/launcher.js"
   },
-  "private": true,
   "keywords": [
     "CORE"
   ],
