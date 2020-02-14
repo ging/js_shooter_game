@@ -19,7 +19,7 @@ Practicar con clases, Booleans, Strings y con el manejo de eventos.
 En esta entrega vamos a desarrollar un juego completo usando HTML, CSS y JavaScript. El juego consiste en un juego clásico de disparos, en el que manejaremos a nuestro personaje (cuadrado) utilizando las flechas del teclado o la pantalla táctil. El objetivo del juego es disparar a una serie de formas que aparecerán en la pantalla para convertirlas en estrellas, a la vez que esquivamos sus disparos. Para comenzar el desarrollo partimos de la versión básica del juego cuyo código proporcionamos.
 
 <p align="center">
-  <img width="187" height="264" style="border: 1px solid grey;" src="https://raw.githubusercontent.com/ging/js_shooter_game/master/assets/screenshot.png">
+  <img width="187" height="264" style="border: 1px solid grey;" src="https://raw.githubusercontent.com/CORE-2020/Entrega3_juego/master/assets/screenshot.png">
 </p>
 
 
@@ -30,12 +30,13 @@ El proyecto se descarga en el ordenador local con estos comandos:
 El proyecto debe clonarse en el ordenador desde el que se está trabajando
 
 ```
-$ git clone https://github.com/ging/js_shooter_game
+$ git clone https://github.com/CORE-2020/Entrega3_juego
 ```
 Entrar en el directorio de trabajo
 
 ```
-$ cd js_shooter_game
+$ cd 
+Entrega3_juego
 ```
 
 ## Elementos del juego
